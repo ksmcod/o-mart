@@ -21,33 +21,51 @@ export default function RegisterForm() {
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       username: "",
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
     },
   });
   return (
-    <div className="mt-8 space-y-4">
+    <div className="mt-8 space-y-6">
       <h1 className="text-2xl text-center font-bold">Register on O'Mart</h1>
 
       <Form {...form}>
         <form className="space-y-8 max-w-2xl mx-auto">
           {/* Input Fields */}
           <div className="space-y-3">
-            {/* Full name field */}
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem className="flex flex-col gap-0">
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Bowser Dragon" type="text" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 *:flex-1">
+              {/* First name field */}
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col gap-0">
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Bowser" type="text" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Last name field */}
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col gap-0">
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Dragon" type="text" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             {/* Username */}
             <FormField

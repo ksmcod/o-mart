@@ -1,7 +1,11 @@
 import { z } from "zod";
 
 export const RegisterSchema = z.object({
-  name: z
+  firstName: z
+    .string()
+    .nonempty({ message: "This field is requred" })
+    .min(3, { message: "Enter a name of at least 3 characters" }),
+  lastName: z
     .string()
     .nonempty({ message: "This field is requred" })
     .min(3, { message: "Enter a name of at least 3 characters" }),
