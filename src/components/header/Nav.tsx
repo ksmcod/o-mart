@@ -1,11 +1,15 @@
+import { Plus } from "lucide-react";
 import Link from "next/link";
 
 export default function Nav() {
   return (
     <nav className="flex items-center gap-2">
-      <button className="px-2 py-1 border border-red-500 text-red-500">
-        Post an ad
+      <button className="px-2 py-1 border border-red-500 text-red-500 flex items-center rounded-sm gap-1">
+        <Plus />
+        <span>Post an ad</span>
       </button>
+
+      <div className="border-r h-full"></div>
 
       <Link
         href={"/login"}
