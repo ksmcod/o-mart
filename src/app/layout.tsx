@@ -5,7 +5,7 @@ import Header from "@/components/header/Header";
 import Container from "@/components/Container";
 
 export const metadata: Metadata = {
-  title: "Market place",
+  title: "O'mart | Buy and sell anything",
   description: "A marketplace app built with Nextjs",
 };
 
