@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
+import Container from "@/components/Container";
 
 export const metadata: Metadata = {
   title: "Market place",
@@ -22,7 +23,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${font.className}`}>
         <Header />
-        {children}
+
+        <Container>{children}</Container>
       </body>
     </html>
   );
