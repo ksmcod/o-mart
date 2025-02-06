@@ -7,7 +7,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import registerAction from "@/actions/register";
-import { RegisterSchema } from "@/schemas";
+import { LoginSchema } from "@/schemas";
 import {
   Form,
   FormControl,
@@ -21,42 +21,41 @@ import { Button } from "@/components/ui/button";
 import FormSuccess from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 
-export default function RegisterForm() {
+export default function LoginForm() {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSucces] = useState<string | undefined>("");
 
   const [isLoading, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof RegisterSchema>>({
-    resolver: zodResolver(RegisterSchema),
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
-      username: "",
-      firstName: "",
-      lastName: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("");
     setSucces("");
 
-    startTransition(() => {
-      registerAction(values)
-        .then((data) => {
-          setSucces(data.success);
-          setError(data.error);
-        })
-        .catch((err) => {
-          setError("An error occured!");
-        });
-    });
+    // startTransition(() => {
+    //   registerAction(values)
+    //     .then((data) => {
+    //       setSucces(data.success);
+    //       setError(data.error);
+    //     })
+    //     .catch((err) => {
+    //       setError("An error occured!");
+    //     });
+    // });
   };
 
   return (
     <div className="mt-8 space-y-6">
-      <h1 className="text-2xl text-center font-bold">Register on O'Mart</h1>
+      <h1 className="text-2xl text-center font-bold">
+        Sign in to your O'Mart account
+      </h1>
 
       <Form {...form}>
         <form
@@ -65,53 +64,6 @@ export default function RegisterForm() {
         >
           {/* Input Fields */}
           <div className="space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 *:flex-1">
-              {/* First name field */}
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col gap-0">
-                    <FormLabel>First Name</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Bowser" type="text" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Last name field */}
-              <FormField
-                control={form.control}
-                name="lastName"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col gap-0">
-                    <FormLabel>Last Name</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="Dragon" type="text" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            {/* Username */}
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem className="flex flex-col gap-0">
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="bowser112" type="text" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             {/* Email */}
             <FormField
               control={form.control}
@@ -159,16 +111,16 @@ export default function RegisterForm() {
               type="submit"
               disabled={isLoading}
             >
-              Register
+              Sign in
             </Button>
 
             <div className="text-xs mt-40 flex gap-1">
-              <span>Already have an account?</span>
+              <span>Don't have an account?</span>
               <Link
-                href={"/login"}
+                href={"/register"}
                 className="hover:underline hover:text-red-500"
               >
-                Log in
+                Register
               </Link>
             </div>
           </div>

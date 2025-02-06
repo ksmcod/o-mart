@@ -22,3 +22,11 @@ export const RegisterSchema = z.object({
     .nonempty({ message: "This field is required" })
     .min(6, { message: "Please enter at least 6 characters" }),
 });
+
+export const LoginSchema = z.object({
+  email: z
+    .string()
+    .nonempty({ message: "This field is required" })
+    .email({ message: "Invalid email" }),
+  password: z.string().nonempty({ message: "This field is required" }),
+});

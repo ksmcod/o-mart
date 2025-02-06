@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import Container from "@/components/Container";
@@ -9,9 +9,9 @@ export const metadata: Metadata = {
   description: "A marketplace app built with Nextjs",
 };
 
-const font = Inter({
+const font = Nunito({
   subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  weight: ["200", "300", "400", "500", "600", "700"],
 });
 
 export default function RootLayout({
