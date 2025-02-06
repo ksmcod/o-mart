@@ -1,9 +1,13 @@
 "use client";
 
-import { RegisterSchema } from "@/schemas";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import registerAction from "@/actions/register";
+import { RegisterSchema } from "@/schemas";
 import {
   Form,
   FormControl,
@@ -13,10 +17,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import FormSuccess from "@/components/auth/form-success";
+import { FormError } from "@/components/auth/form-error";
 
 export default function RegisterForm() {
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSucces] = useState<string | undefined>("");
+
+  const [isLoading, startTransition] = useTransition();
+
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -27,12 +37,32 @@ export default function RegisterForm() {
       password: "",
     },
   });
+
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+    setError("");
+    setSucces("");
+
+    startTransition(() => {
+      registerAction(values)
+        .then((data) => {
+          setSucces(data.success);
+          setError(data.error);
+        })
+        .catch((err) => {
+          setError("An error occured!");
+        });
+    });
+  };
+
   return (
     <div className="mt-8 space-y-6">
       <h1 className="text-2xl text-center font-bold">Register on O'Mart</h1>
 
       <Form {...form}>
-        <form className="space-y-8 max-w-2xl mx-auto">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 max-w-2xl mx-auto"
+        >
           {/* Input Fields */}
           <div className="space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 *:flex-1">
@@ -118,6 +148,8 @@ export default function RegisterForm() {
 
             {/* Form Status */}
             {/* TODO: Form success/error message */}
+            <FormSuccess message={success} />
+            <FormError message={error} />
           </div>
 
           <div className="space-y-2">
@@ -125,6 +157,7 @@ export default function RegisterForm() {
             <Button
               className="bg-red-500 hover:bg-red-600 transition-colors py-5 font-bold text-base text-white w-full"
               type="submit"
+              disabled={isLoading}
             >
               Register
             </Button>
