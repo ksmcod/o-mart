@@ -1,3 +1,7 @@
-export default function Home() {
-  return <div>Hello Marketplace!</div>;
+import { auth } from "@/auth";
+
+export default async function Home() {
+  const session = await auth();
+
+  return <div>{JSON.stringify(session)}</div>;
 }

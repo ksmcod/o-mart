@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import registerAction from "@/actions/register";
 import { LoginSchema } from "@/schemas";
+import loginAction from "@/actions/login";
 import {
   Form,
   FormControl,
@@ -20,8 +20,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import FormSuccess from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const router = useRouter();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSucces] = useState<string | undefined>("");
 
@@ -35,20 +37,26 @@ export default function LoginForm() {
     },
   });
 
+  useEffect(() => {
+    if (success) {
+      router.push("/");
+    }
+  }, [success]);
+
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("");
     setSucces("");
 
-    // startTransition(() => {
-    //   registerAction(values)
-    //     .then((data) => {
-    //       setSucces(data.success);
-    //       setError(data.error);
-    //     })
-    //     .catch((err) => {
-    //       setError("An error occured!");
-    //     });
-    // });
+    startTransition(() => {
+      loginAction(values)
+        .then((data) => {
+          setSucces(data.success);
+          setError(data.error);
+        })
+        .catch((err) => {
+          setError("An error occured!");
+        });
+    });
   };
 
   return (
