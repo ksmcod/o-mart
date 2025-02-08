@@ -117,7 +117,7 @@ export default function LoginForm() {
             <Button
               className="bg-red-500 hover:bg-red-600 transition-colors py-5 font-bold text-base text-white w-full"
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || !!success}
             >
               Sign in
             </Button>
