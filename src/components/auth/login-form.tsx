@@ -3,6 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -20,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import FormSuccess from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
-import { useRouter } from "next/navigation";
+// import Social from "@/components/auth/social";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -134,6 +135,8 @@ export default function LoginForm() {
           </div>
         </form>
       </Form>
+
+      {/* <Social /> */}
     </div>
   );
 }

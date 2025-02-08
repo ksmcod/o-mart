@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import Container from "@/components/Container";
+import { auth } from "@/auth";
 
 export const metadata: Metadata = {
   title: "O'mart | Buy and sell anything",
@@ -14,17 +16,21 @@ const font = Nunito({
   weight: ["200", "300", "400", "500", "600", "700"],
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <body className={`${font.className}`}>
-        <Header />
+        <SessionProvider session={session}>
+          <Header />
 
-        <Container>{children}</Container>
+          <Container>{children}</Container>
+        </SessionProvider>
       </body>
     </html>
   );
