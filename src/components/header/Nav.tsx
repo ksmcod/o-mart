@@ -1,15 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import { Plus } from "lucide-react";
-import logoutAction from "@/actions/logout";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { Button } from "../ui/button";
 
 export default function Nav() {
   const currentUser = useCurrentUser();
-
-  // console.log("Current user in Nav: ", currentUser);
 
   return (
     <nav className="flex items-center gap-2">
@@ -22,7 +20,7 @@ export default function Nav() {
 
       {currentUser ? (
         <Button
-          onClick={() => logoutAction()}
+          onClick={() => signOut()}
           className="px-3 py-4 bg-white border border-red-500 text-red-500 font-bold hover:bg-red-100"
         >
           Sign out

@@ -1,3 +1,4 @@
+import "crypto";
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
@@ -11,6 +12,15 @@ export const {
   signOut,
 } = NextAuth({
   ...authConfig,
+  events: {
+    async linkAccount({ user }) {
+      const randomUsername = `user-${crypto.randomUUID().slice(0, 10)}`;
+      await db.user.update({
+        where: { id: user.id },
+        data: { username: randomUsername },
+      });
+    },
+  },
   pages: {
     signIn: "/login",
     error: "/error",
