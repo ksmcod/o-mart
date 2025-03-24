@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import FormSuccess from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
+import Social from "./social";
 
 export default function RegisterForm() {
   const [error, setError] = useState<string | undefined>("");
@@ -55,7 +56,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="mt-8 space-y-6">
+    <div className="mt-8 space-y-6 pb-6">
       <h1 className="text-2xl text-center font-bold">Register on O'Mart</h1>
 
       <Form {...form}>
@@ -155,7 +156,7 @@ export default function RegisterForm() {
           <div className="space-y-2">
             {/* Submit button */}
             <Button
-              className="bg-red-500 hover:bg-red-600 transition-colors py-5 font-bold text-base text-white w-full"
+              className="bg- hover:bg-main_hover transition-colors py-5 font-bold text-base text-white w-full"
               type="submit"
               disabled={isLoading}
             >
@@ -164,16 +165,17 @@ export default function RegisterForm() {
 
             <div className="text-xs mt-40 flex gap-1">
               <span>Already have an account?</span>
-              <Link
-                href={"/login"}
-                className="hover:underline hover:text-red-500"
-              >
+              <Link href={"/login"} className="hover:underline hover:text-main">
                 Log in
               </Link>
             </div>
           </div>
         </form>
       </Form>
+
+      <div className="max-w-2xl mx-auto">
+        <Social />
+      </div>
     </div>
   );
 }

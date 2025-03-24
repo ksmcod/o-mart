@@ -17,7 +17,7 @@ export default function ErrorPage() {
       <p className="flex gap-1">
         {message}
         <span>Return to</span>
-        <Link href={"/"} className="hover:underline hover:text-red-500">
+        <Link href={"/"} className="hover:underline hover:text-main_hover">
           Home
         </Link>
       </p>

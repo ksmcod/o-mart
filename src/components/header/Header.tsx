@@ -5,7 +5,7 @@ import Nav from "./Nav";
 export default function Header() {
   return (
     <header className="border-b shadow-sm p-4">
-      <Container>
+      <Container variant="large">
         <div className="flex justify-between">
           <Logo />
 

@@ -114,7 +114,7 @@ export default function LoginForm() {
           <div className="space-y-2">
             {/* Submit button */}
             <Button
-              className="bg-red-500 hover:bg-red-600 transition-colors py-5 font-bold text-base text-white w-full"
+              className="bg-main hover:bg-main_hover transition-colors py-5 font-bold text-base text-white w-full"
               type="submit"
               disabled={isLoading || !!success}
             >
@@ -125,7 +125,7 @@ export default function LoginForm() {
               <span>Don't have an account?</span>
               <Link
                 href={"/register"}
-                className="hover:underline hover:text-red-500"
+                className="hover:underline hover:text-main_hover"
               >
                 Register
               </Link>
