@@ -39,7 +39,7 @@ export default function Nav() {
 
       <div className="border-r h-full"></div>
 
-      {currentUser ? (
+      {currentUser && (
         // <Button
         //   onClick={() => signOut()}
         //   className="px-3 py-4 bg-white border border-main text-main font-bold hover:bg-red-100"
@@ -48,13 +48,18 @@ export default function Nav() {
         // </Button>
         <div className="">
           <Avatar
-            className="bg-white text-main outline outline-4 outline-indigo-500 size-9 hover:cursor-pointer border-2 border-main p-1"
+            className={`bg-white text-main size-10 hover:cursor-pointer  hover:outline outline-2 -outline-offset-1 outline-main ${
+              currentUser.image ? "" : "border-main border-2"
+            }`}
             onClick={(e) => toggleDropdown(e)}
           >
             {currentUser.image ? (
               <AvatarImage src={currentUser.image} />
             ) : (
-              <UserRound strokeWidth={1.5} className="w-full h-full" />
+              <UserRound
+                strokeWidth={1.5}
+                className="w-full h-full outline outline-4 outline-yellow-400"
+              />
             )}
           </Avatar>
 
@@ -65,7 +70,7 @@ export default function Nav() {
                 <Link
                   href={"/account"}
                   className={
-                    "w-full px-2 py-2 flex items-center rounded-sm hover:bg-blue-100 hover:underline hover:underline-offset-2"
+                    "w-full px-2 py-2 flex items-center rounded-sm hover:bg-red-100 hover:underline hover:underline-offset-2"
                   }
                 >
                   My Account
@@ -75,7 +80,7 @@ export default function Nav() {
 
                 <div
                   className={
-                    "w-full px-2 py-2 flex items-center rounded-sm hover:bg-blue-100 hover:underline hover:underline-offset-2 hover:cursor-pointer"
+                    "w-full px-2 py-2 flex items-center rounded-sm hover:bg-red-100 hover:underline hover:underline-offset-2 hover:cursor-pointer"
                   }
                   onClick={() => {
                     signOut();
@@ -87,7 +92,9 @@ export default function Nav() {
             </div>
           )}
         </div>
-      ) : (
+      )}
+
+      {!currentUser && (
         <Link
           href={"/login"}
           className="px-3 py-2 bg-main text-white font-bold hover:bg-main_hover transition-colors rounded-sm"
