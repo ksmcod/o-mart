@@ -4,7 +4,7 @@
  * @type {string[]}
  */
 
-export const privateRoutes = [""];
+export const privateRoutes = ["/account"];
 
 /**
  * An array of routes that are used for authentication.

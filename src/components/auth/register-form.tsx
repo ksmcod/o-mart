@@ -156,7 +156,7 @@ export default function RegisterForm() {
           <div className="space-y-2">
             {/* Submit button */}
             <Button
-              className="bg- hover:bg-main_hover transition-colors py-5 font-bold text-base text-white w-full"
+              className="bg-main hover:bg-main_hover transition-colors py-5 font-bold text-base text-white w-full"
               type="submit"
               disabled={isLoading}
             >

@@ -13,16 +13,18 @@ export default function Nav() {
 
   const currentUser = useCurrentUser();
 
-  const wel = () => {
-    if (isDropdownOpen) {
-      // console.log("Window event called!!");
-      setIsDropdownOpen(!isDropdownOpen);
-    }
+  if (globalThis.window !== undefined) {
+    const wel = () => {
+      if (isDropdownOpen) {
+        // console.log("Window event called!!");
+        setIsDropdownOpen(!isDropdownOpen);
+      }
 
-    window.removeEventListener("click", wel);
-  };
+      globalThis.window.removeEventListener("click", wel);
+    };
 
-  window.addEventListener("click", wel);
+    globalThis.window.addEventListener("click", wel);
+  }
 
   function toggleDropdown(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
     // console.log("Toggle dropdown function!!");
@@ -56,10 +58,7 @@ export default function Nav() {
             {currentUser.image ? (
               <AvatarImage src={currentUser.image} />
             ) : (
-              <UserRound
-                strokeWidth={1.5}
-                className="w-full h-full outline outline-4 outline-yellow-400"
-              />
+              <UserRound strokeWidth={1.5} className="w-full h-full" />
             )}
           </Avatar>
 

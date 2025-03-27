@@ -34,7 +34,7 @@ export async function middleware(req: NextRequest) {
   }
 
   if (!isLoggedIn && !isPublicRoute) {
-    return NextResponse.redirect(new URL("/", nextUrl));
+    return NextResponse.redirect(new URL("/login", nextUrl));
   }
   return;
 }
