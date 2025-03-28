@@ -61,7 +61,10 @@ export default function Nav() {
             {currentUser.image ? (
               <AvatarImage src={currentUser.image} />
             ) : (
-              <UserRound strokeWidth={1.5} className="w-full h-full" />
+              <UserRound
+                strokeWidth={1.5}
+                className="w-full h-full bg-main text-white p-[2px]"
+              />
             )}
           </Avatar>
 
