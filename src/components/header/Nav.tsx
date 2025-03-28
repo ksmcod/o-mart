@@ -34,10 +34,13 @@ export default function Nav() {
 
   return (
     <nav className="flex items-center gap-2">
-      <button className="px-2 py-1 border border-main text-main flex items-center rounded-sm gap-1">
+      <Link
+        href={"/new"}
+        className="px-2 py-1 border border-main text-main flex items-center rounded font-bold gap-1"
+      >
         <Plus />
-        <span>Post an ad</span>
-      </button>
+        <span>Post product</span>
+      </Link>
 
       <div className="border-r h-full"></div>
 

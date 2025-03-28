@@ -6,7 +6,7 @@ import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { LoginSchema } from "@/schemas";
+import { LoginSchema } from "@/schemas/auth-schemas";
 import loginAction from "@/actions/login";
 import {
   Form,

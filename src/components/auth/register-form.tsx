@@ -7,7 +7,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import registerAction from "@/actions/register";
-import { RegisterSchema } from "@/schemas";
+import { RegisterSchema } from "@/schemas/auth-schemas";
 import {
   Form,
   FormControl,
