@@ -25,6 +25,7 @@ import Social from "./social";
 export default function RegisterForm() {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSucces] = useState<string | undefined>("");
+  const [disableButtons, setDisableButtons] = useState<boolean>(false);
 
   const [isLoading, startTransition] = useTransition();
 
@@ -43,18 +44,26 @@ export default function RegisterForm() {
     setError("");
     setSucces("");
 
+    setDisableButtons(true);
+
     startTransition(() => {
       registerAction(values)
         .then((data) => {
           setSucces(data.success);
           setError(data.error);
+
+          setDisableButtons(isLoading || !!success);
         })
         .catch((err) => {
           console.log("Error: ", err);
           setError("An error occured!");
+
+          setDisableButtons(isLoading || !!success);
         });
     });
   };
+
+  console.log("HERE IT IS: ", disableButtons);
 
   return (
     <div className="mt-8 space-y-6 pb-6">
@@ -161,7 +170,7 @@ export default function RegisterForm() {
             <Button
               className="bg-main hover:bg-main_hover transition-colors py-5 font-bold text-base text-white w-full"
               type="submit"
-              disabled={isLoading}
+              disabled={disableButtons}
             >
               Register
             </Button>
@@ -177,7 +186,10 @@ export default function RegisterForm() {
       </Form>
 
       <div className="max-w-2xl mx-auto">
-        <Social />
+        <Social
+          disableButtons={disableButtons}
+          setDisableButtons={setDisableButtons}
+        />
       </div>
     </div>
   );

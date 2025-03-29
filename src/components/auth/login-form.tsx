@@ -25,6 +25,7 @@ import Social from "@/components/auth/social";
 export default function LoginForm() {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSucces] = useState<string | undefined>("");
+  const [disableButtons, setDisableButtons] = useState<boolean>(false);
 
   const [isLoading, startTransition] = useTransition();
 
@@ -46,15 +47,21 @@ export default function LoginForm() {
     setError("");
     setSucces("");
 
+    setDisableButtons(true);
+
     startTransition(() => {
       loginAction(values)
         .then((data) => {
           setSucces(data.success);
           setError(data.error);
+
+          setDisableButtons(isLoading || !!success);
         })
         .catch((err) => {
           console.log("Error: ", err);
           setError("An error occured!");
+
+          setDisableButtons(isLoading || !!success);
         });
     });
   };
@@ -117,7 +124,7 @@ export default function LoginForm() {
             <Button
               className="bg-main hover:bg-main_hover transition-colors py-5 font-bold text-base text-white w-full"
               type="submit"
-              disabled={isLoading || !!success}
+              disabled={disableButtons}
             >
               Sign in
             </Button>
@@ -136,7 +143,10 @@ export default function LoginForm() {
       </Form>
 
       <div className="max-w-2xl mx-auto">
-        <Social />
+        <Social
+          disableButtons={disableButtons}
+          setDisableButtons={setDisableButtons}
+        />
       </div>
     </div>
   );
