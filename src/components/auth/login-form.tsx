@@ -3,6 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -27,6 +28,9 @@ export default function LoginForm() {
   const [success, setSucces] = useState<string | undefined>("");
   const [disableButtons, setDisableButtons] = useState<boolean>(false);
 
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const [isLoading, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -42,6 +46,13 @@ export default function LoginForm() {
       window.location.reload();
     }
   }, [success]);
+
+  useEffect(() => {
+    if (searchParams.get("error") === "OAuthAccountNotLinked") {
+      setError("Email already in use");
+      router.push("/login");
+    }
+  }, []);
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("");
@@ -59,7 +70,7 @@ export default function LoginForm() {
         })
         .catch((err) => {
           console.log("Error: ", err);
-          setError("An error occured!");
+          setError("An error occured");
 
           setDisableButtons(isLoading || !!success);
         });
