@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import FormSuccess from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 import Social from "@/components/auth/social";
+import Loader from "../Loader";
 
 export default function LoginForm() {
   const [error, setError] = useState<string | undefined>("");
@@ -137,7 +138,13 @@ export default function LoginForm() {
               type="submit"
               disabled={disableButtons}
             >
-              Sign in
+              {disableButtons ? (
+                <>
+                  <Loader classname="border-white size-6" />
+                </>
+              ) : (
+                <>Sign in</>
+              )}
             </Button>
 
             <div className="text-xs mt-40 flex gap-1">

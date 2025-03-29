@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import FormSuccess from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 import Social from "./social";
+import Loader from "../Loader";
 
 export default function RegisterForm() {
   const [error, setError] = useState<string | undefined>("");
@@ -172,7 +173,13 @@ export default function RegisterForm() {
               type="submit"
               disabled={disableButtons}
             >
-              Register
+              {disableButtons ? (
+                <>
+                  <Loader classname="border-white size-6" />
+                </>
+              ) : (
+                <>Register</>
+              )}
             </Button>
 
             <div className="text-xs mt-40 flex gap-1">
