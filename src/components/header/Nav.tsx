@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { Plus, User, UserRound } from "lucide-react";
+import { Plus, UserRound } from "lucide-react";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { Button } from "../ui/button";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { useState } from "react";
 

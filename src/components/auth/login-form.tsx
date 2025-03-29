@@ -53,6 +53,7 @@ export default function LoginForm() {
           setError(data.error);
         })
         .catch((err) => {
+          console.log("Error: ", err);
           setError("An error occured!");
         });
     });
@@ -61,7 +62,7 @@ export default function LoginForm() {
   return (
     <div className="mt-8 space-y-6">
       <h1 className="text-2xl text-center font-bold">
-        Sign in to your O'Mart account
+        Sign in to your O&apos;Mart account
       </h1>
 
       <Form {...form}>
@@ -122,7 +123,7 @@ export default function LoginForm() {
             </Button>
 
             <div className="text-xs mt-40 flex gap-1">
-              <span>Don't have an account?</span>
+              <span>Don&apos;t have an account?</span>
               <Link
                 href={"/register"}
                 className="hover:underline hover:text-main_hover"

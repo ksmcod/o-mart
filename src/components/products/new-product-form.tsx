@@ -62,6 +62,8 @@ export default function NewProductForm() {
   };
 
   return (
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     <div className="mt-8 space-y-6 pb-10">
       <h1 className="text-2xl text-center font-bold">Post a new product</h1>
 
@@ -221,5 +223,7 @@ export default function NewProductForm() {
         </form>
       </Form>
     </div>
+    /* eslint-enable @typescript-eslint/no-explicit-any */
+    /* eslint-enable @typescript-eslint/no-unused-vars */
   );
 }

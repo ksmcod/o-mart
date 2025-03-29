@@ -9,7 +9,7 @@ const font = Pacifico({
 export default function Logo() {
   return (
     <Link href={"/"} className={`text-main text-2xl ${font.className}`}>
-      O'Mart
+      O&apos;Mart
     </Link>
   );
 }

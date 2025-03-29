@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
+import { OAuthSignin } from "@/actions/oauth-signin";
 import { Button } from "@/components/ui/button";
 import GithubIcon from "@/logos/github/github-mark-white.png";
 import GoogleIcon from "@/logos/google/google.png";
@@ -11,7 +12,8 @@ export default function Social() {
     <div className="flex flex-col sm:flex-row items-center gap-2">
       {/* Github Sign in button */}
       <Button
-        onClick={() => signIn("github")}
+        // onClick={() => signIn("github")}
+        onClick={() => OAuthSignin({ provider: "github" })}
         className="w-full h-auto py-2 flex items-center gap-2"
       >
         <Image
@@ -24,7 +26,8 @@ export default function Social() {
 
       {/* Google Sign in button */}
       <Button
-        onClick={() => signIn("google")}
+        // onClick={() => signIn("google")}
+        onClick={() => OAuthSignin({ provider: "google" })}
         className="w-full h-auto py-2 flex items-center gap-2"
       >
         <Image

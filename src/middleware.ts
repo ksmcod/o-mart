@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-import {
-  DEFAULT_LOGIN_REDIRECT,
-  apiAuthPrefix,
-  authRoutes,
-  privateRoutes,
-} from "@/routes";
+import { apiAuthPrefix, authRoutes, privateRoutes } from "@/routes";
 
 export async function middleware(req: NextRequest) {
   const { nextUrl } = req;

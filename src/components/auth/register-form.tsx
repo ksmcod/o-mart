@@ -50,6 +50,7 @@ export default function RegisterForm() {
           setError(data.error);
         })
         .catch((err) => {
+          console.log("Error: ", err);
           setError("An error occured!");
         });
     });
@@ -57,7 +58,9 @@ export default function RegisterForm() {
 
   return (
     <div className="mt-8 space-y-6 pb-6">
-      <h1 className="text-2xl text-center font-bold">Register on O'Mart</h1>
+      <h1 className="text-2xl text-center font-bold">
+        Register on O&apos;Mart
+      </h1>
 
       <Form {...form}>
         <form
