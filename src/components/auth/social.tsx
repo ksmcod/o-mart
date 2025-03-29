@@ -8,7 +8,7 @@ import GoogleIcon from "@/logos/google/google.png";
 
 export default function Social() {
   return (
-    <div className="space-y-3">
+    <div className="flex flex-col sm:flex-row items-center gap-2">
       {/* Github Sign in button */}
       <Button
         onClick={() => signIn("github")}
