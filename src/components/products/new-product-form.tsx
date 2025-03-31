@@ -23,6 +23,8 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { ImagePlus } from "lucide-react";
+import { Label } from "../ui/label";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 // import Select from "react-select";
@@ -36,6 +38,7 @@ export default function NewProductForm() {
       sub_category: "",
       description: "",
       price: 0,
+      imageFiles: [],
     },
   });
 
@@ -45,6 +48,8 @@ export default function NewProductForm() {
 
   const [subCategoryOption, setSubCategoryOption] =
     useState<SelectOptionType | null>(null);
+
+  const [images, setImages] = useState<File[]>([]);
 
   function subCategoriesFiller() {
     // Function to dynamically fill-in the dropddown for sub-categories depending on selected category
@@ -61,6 +66,42 @@ export default function NewProductForm() {
     console.log("Final Values: ", formData);
   };
 
+  // Function to add an image
+  function addImage(e: React.ChangeEvent<HTMLInputElement>) {
+    const validImageTypes = [
+      "image/png",
+      "image/jpg",
+      "image/jpeg",
+      "image/webp",
+    ];
+    const selectedImages = Array.from(e.target.files || []);
+    const imageFilesArray: File[] = Array.from(images);
+
+    selectedImages.forEach((image) => {
+      if (!validImageTypes.includes(image.type)) {
+        // TODO: Proper Error Message For Invalid Types
+
+        e.target.value = "";
+
+        return;
+      }
+
+      imageFilesArray.push(image);
+      setImages(imageFilesArray);
+
+      const dataTransfer = new DataTransfer();
+      imageFilesArray.forEach((image) => dataTransfer.items.add(image));
+
+      const imageFiles = Array.from(dataTransfer.files);
+
+      if (imageFiles.length === 0) {
+        return;
+      }
+
+      form.setValue("imageFiles", imageFiles as [File, ...File[]]);
+    });
+  }
+
   return (
     /* eslint-disable @typescript-eslint/no-unused-vars */
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -69,7 +110,7 @@ export default function NewProductForm() {
 
       <Form {...form}>
         <form
-          className="space-y-8 max-w-2xl mx-auto"
+          className="space-y-8 max-w-3xl mx-auto"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           {/* INPUT FIELDS */}
@@ -215,9 +256,38 @@ export default function NewProductForm() {
                 </FormItem>
               )}
             />
+
+            {/* PRODUCT PHOTOS */}
+            <div className="">
+              <FormField
+                control={form.control}
+                name="imageFiles"
+                render={({ fieldState }) => (
+                  <FormItem className="flex flex-col gap-0">
+                    <FormLabel
+                      className={`flex justify-center items-center gap-3 border-2 bg-gray-100 rounded-lg cursor-pointer p-1 ${
+                        fieldState.invalid && "border-main"
+                      }`}
+                    >
+                      <ImagePlus size={30} strokeWidth={1.5} />
+                      <span className="text-base">Add photos</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        className="hidden"
+                        multiple
+                        onChange={(e) => addImage(e)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
 
-          <Button className="bg-main hover:bg-main_hover text-white font-bold text-base w-full">
+          <Button className="bg-main hover:bg-main_hover text-white font-bold text-base w-full p-4">
             Publish
           </Button>
         </form>

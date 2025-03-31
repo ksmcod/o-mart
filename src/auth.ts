@@ -50,7 +50,7 @@ export const {
 
       token.username = existingUser.username;
 
-      return token;
+      return token ?? {};
     },
 
     async session({ token, session }) {

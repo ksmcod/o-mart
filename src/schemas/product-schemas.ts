@@ -14,4 +14,7 @@ export const ProductSchema = z.object({
   price: z
     .number({ message: "Please type in a valid price" })
     .gt(0, { message: "The price must be greatter than 0" }),
+  imageFiles: z
+    .array(z.instanceof(File))
+    .nonempty({ message: "Please upload at least one image of your product" }),
 });
