@@ -66,14 +66,12 @@ export default function LoginForm() {
         .then((data) => {
           setSucces(data.success);
           setError(data.error);
-
-          setDisableButtons(isLoading || !!success);
         })
         .catch((err) => {
           console.log("Error: ", err);
           setError("An error occured");
 
-          setDisableButtons(isLoading || !!success);
+          setDisableButtons(false);
         });
     });
   };
@@ -138,7 +136,7 @@ export default function LoginForm() {
               type="submit"
               disabled={disableButtons}
             >
-              {disableButtons ? (
+              {isLoading ? (
                 <>
                   <Loader classname="border-white size-6" />
                 </>

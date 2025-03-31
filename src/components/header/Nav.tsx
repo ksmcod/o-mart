@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { Plus, UserRound } from "lucide-react";
+import { LogOut, Plus, User, UserRound } from "lucide-react";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { useState } from "react";
@@ -35,7 +35,7 @@ export default function Nav() {
     <nav className="flex items-center gap-2">
       <Link
         href={"/new"}
-        className="px-2 py-1 border border-main text-main flex items-center rounded font-bold gap-1"
+        className="px-2 py-1 border border-main text-main hidden sm:flex items-center rounded font-bold gap-1"
       >
         <Plus />
         <span>Post product</span>
@@ -74,23 +74,35 @@ export default function Nav() {
                 <Link
                   href={"/account"}
                   className={
-                    "w-full px-2 py-2 flex items-center rounded-sm hover:bg-red-100 hover:underline hover:underline-offset-2"
+                    "w-full px-2 py-2 flex items-center gap-2 rounded-sm hover:bg-gray-100 hover:underline hover:underline-offset-2"
                   }
                 >
-                  My Account
+                  <User strokeWidth={1.5} />
+                  <span>My account</span>
+                </Link>
+
+                <Link
+                  href={"/new"}
+                  className={
+                    "w-full px-2 py-2 flex items-center gap-2 rounded-sm hover:bg-gray-100 hover:underline hover:underline-offset-2"
+                  }
+                >
+                  <Plus strokeWidth={1.5} />
+                  <span>Sell a product</span>
                 </Link>
 
                 <hr />
 
                 <div
                   className={
-                    "w-full px-2 py-2 flex items-center rounded-sm hover:bg-red-100 hover:underline hover:underline-offset-2 hover:cursor-pointer"
+                    "w-full px-2 py-2 flex items-center gap-2 rounded-sm hover:bg-gray-100 hover:underline hover:underline-offset-2 hover:cursor-pointer"
                   }
                   onClick={() => {
                     signOut();
                   }}
                 >
-                  Sign out
+                  <LogOut strokeWidth={1.5} />
+                  <span>Sign out</span>
                 </div>
               </div>
             </div>

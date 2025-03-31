@@ -52,19 +52,15 @@ export default function RegisterForm() {
         .then((data) => {
           setSucces(data.success);
           setError(data.error);
-
-          setDisableButtons(isLoading || !!success);
         })
         .catch((err) => {
           console.log("Error: ", err);
           setError("An error occured!");
 
-          setDisableButtons(isLoading || !!success);
+          setDisableButtons(false);
         });
     });
   };
-
-  console.log("HERE IT IS: ", disableButtons);
 
   return (
     <div className="mt-8 space-y-6 pb-6">
