@@ -52,13 +52,13 @@ export default function Nav() {
         // </Button>
         <div className="">
           <Avatar
-            className={`bg-white text-main size-10 hover:cursor-pointer  hover:outline outline-2 -outline-offset-1 outline-main ${
+            className={`bg-white text-main size-10 hover:cursor-pointer  hover:outline outline-2 -outline-offset-1 outline-main border-2 ${
               currentUser.image ? "" : "border-main border-2"
             }`}
             onClick={(e) => toggleDropdown(e)}
           >
             {currentUser.image ? (
-              <AvatarImage src={currentUser.image} />
+              <AvatarImage src={currentUser.image} alt="Profile Image" />
             ) : (
               <UserRound
                 strokeWidth={1.5}

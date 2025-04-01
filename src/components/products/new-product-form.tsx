@@ -25,6 +25,7 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { ImagePlus } from "lucide-react";
 import { Label } from "../ui/label";
+import Image from "next/image";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 // import Select from "react-select";
@@ -258,7 +259,7 @@ export default function NewProductForm() {
             />
 
             {/* PRODUCT PHOTOS */}
-            <div className="">
+            <div className="space-y-3">
               <FormField
                 control={form.control}
                 name="imageFiles"
@@ -284,6 +285,21 @@ export default function NewProductForm() {
                   </FormItem>
                 )}
               />
+
+              {/* Display Selected Images */}
+              <div className="grid grid-cols-2 sm:flex justify-center items-center flex-wrap gap-1">
+                {images.map((image, index) => (
+                  <div key={index}>
+                    <Image
+                      src={URL.createObjectURL(image)}
+                      alt={image.name}
+                      width={200}
+                      height={200}
+                      className="aspect-square object-cover shadow-md"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
