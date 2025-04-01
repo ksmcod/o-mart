@@ -23,7 +23,7 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { ImagePlus } from "lucide-react";
+import { ImagePlus, Trash2 } from "lucide-react";
 import { Label } from "../ui/label";
 import Image from "next/image";
 
@@ -94,13 +94,29 @@ export default function NewProductForm() {
       imageFilesArray.forEach((image) => dataTransfer.items.add(image));
 
       const imageFiles = Array.from(dataTransfer.files);
-
-      if (imageFiles.length === 0) {
-        return;
-      }
-
       form.setValue("imageFiles", imageFiles as [File, ...File[]]);
     });
+  }
+
+  // Function to delete a selected image
+  function deleteSelectedImage(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    imageFile: File
+  ) {
+    e.preventDefault();
+
+    const imageFilesArray: File[] = Array.from(images);
+    const filteredImageFilesArray: File[] = imageFilesArray.filter(
+      (image) => image !== imageFile
+    );
+
+    const dataTransfer = new DataTransfer();
+    filteredImageFilesArray.forEach((image) => dataTransfer.items.add(image));
+
+    setImages(filteredImageFilesArray);
+    const imageFiles = Array.from(dataTransfer.files);
+
+    form.setValue("imageFiles", imageFiles as [File, ...File[]]);
   }
 
   return (
@@ -289,7 +305,7 @@ export default function NewProductForm() {
               {/* Display Selected Images */}
               <div className="grid grid-cols-2 sm:flex justify-center items-center flex-wrap gap-1">
                 {images.map((image, index) => (
-                  <div key={index}>
+                  <div key={index} className="relative group">
                     <Image
                       src={URL.createObjectURL(image)}
                       alt={image.name}
@@ -297,6 +313,13 @@ export default function NewProductForm() {
                       height={200}
                       className="aspect-square object-cover shadow-md"
                     />
+
+                    <button
+                      className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 text-white"
+                      onClick={(e) => deleteSelectedImage(e, image)}
+                    >
+                      <Trash2 size={35} />
+                    </button>
                   </div>
                 ))}
               </div>
