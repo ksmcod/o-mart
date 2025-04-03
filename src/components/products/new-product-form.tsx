@@ -24,7 +24,6 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { ImagePlus, Trash2 } from "lucide-react";
-import { Label } from "../ui/label";
 import Image from "next/image";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
@@ -305,13 +304,13 @@ export default function NewProductForm() {
               {/* Display Selected Images */}
               <div className="grid grid-cols-2 sm:flex justify-center items-center flex-wrap gap-1">
                 {images.map((image, index) => (
-                  <div key={index} className="relative group">
+                  <div key={index} className="relative group border shadow-md">
                     <Image
                       src={URL.createObjectURL(image)}
                       alt={image.name}
                       width={200}
                       height={200}
-                      className="aspect-square object-cover shadow-md"
+                      className="aspect-square object-cover"
                     />
 
                     <button

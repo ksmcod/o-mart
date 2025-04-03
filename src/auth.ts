@@ -24,12 +24,7 @@ declare module "next-auth/jwt" {
   }
 }
 
-export const {
-  auth,
-  handlers: { GET, POST },
-  signIn,
-  signOut,
-} = NextAuth({
+export const { auth, handlers, signIn, signOut } = NextAuth({
   ...authConfig,
   events: {
     async linkAccount({ user }) {
