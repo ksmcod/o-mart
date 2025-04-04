@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import { z } from "zod";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ImagePlus, Trash2 } from "lucide-react";
+import Image from "next/image";
 
 import {
   Form,
@@ -23,8 +25,6 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { ImagePlus, Trash2 } from "lucide-react";
-import Image from "next/image";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 // import Select from "react-select";
@@ -239,9 +239,7 @@ export default function NewProductForm() {
                       {...field}
                       rows={7}
                       placeholder="Describe your product..."
-                      onChange={(e) =>
-                        field.onChange(e.target.value && e.target.value.trim())
-                      }
+                      onChange={(e) => field.onChange(e.target.value)}
                     ></Textarea>
                   </FormControl>
                   <FormMessage />
@@ -291,6 +289,7 @@ export default function NewProductForm() {
                     <FormControl>
                       <Input
                         type="file"
+                        accept="image/*"
                         className="hidden"
                         multiple
                         onChange={(e) => addImage(e)}
@@ -331,6 +330,7 @@ export default function NewProductForm() {
         </form>
       </Form>
     </div>
+
     /* eslint-enable @typescript-eslint/no-explicit-any */
     /* eslint-enable @typescript-eslint/no-unused-vars */
   );
