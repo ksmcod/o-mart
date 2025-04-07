@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/header/Header";
 import Container from "@/components/Container";
 import { auth } from "@/auth";
+import TanstackProvider from "@/components/providers/tanstack-provider";
 
 export const metadata: Metadata = {
   title: "O'mart | Buy and sell anything",
@@ -26,11 +27,13 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${font.className}`}>
-        <SessionProvider session={session}>
-          <Header />
+        <TanstackProvider>
+          <SessionProvider session={session}>
+            <Header />
 
-          <Container>{children}</Container>
-        </SessionProvider>
+            <Container>{children}</Container>
+          </SessionProvider>
+        </TanstackProvider>
       </body>
     </html>
   );
