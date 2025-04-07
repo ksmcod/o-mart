@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import FormSuccess from "@/components/auth/form-success";
-import { FormError } from "@/components/auth/form-error";
+import FormError from "@/components/auth/form-error";
 import Social from "@/components/auth/social";
 import Loader from "../Loader";
 
