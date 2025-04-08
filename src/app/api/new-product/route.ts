@@ -1,6 +1,14 @@
-import { ProductSchema } from "@/schemas/product-schemas";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { v2 as cloudinary } from "cloudinary";
+import { db } from "@/lib/db";
+
+export const runtime = "nodejs";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req: NextRequest) {
   try {
@@ -32,25 +40,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const imageBuffers = await Promise.all(
-      images.map(async (image) => {
-        if (!(image instanceof File)) {
-          throw new Error("Invalid file types");
-        }
+    const uploadPromises = images.map(async (image) => {
+      if (!(image instanceof File)) {
+        throw new Error("Invalid file types");
+      }
 
-        const arrayBuffer = await image.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
+      const arrayBuffer = await image.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
 
-        return {
-          name: image.name,
-          type: image.type,
-          size: image.size,
-          buffer,
-        };
-      })
-    );
+      const mime = image.type;
+      const b64Buffer = buffer.toString("base64");
+      const dataUri = `data:${mime};base64,${b64Buffer}`;
 
-    console.log("Image buffers: ", imageBuffers);
+      const response = await cloudinary.uploader.upload(dataUri, {
+        folder: "omart/products",
+        use_filename: true,
+      });
+
+      return response.url;
+    });
+
+    const imageUrls = await Promise.all(uploadPromises);
 
     return NextResponse.json({ message: "All good!" }, { status: 200 });
   } catch (error) {
