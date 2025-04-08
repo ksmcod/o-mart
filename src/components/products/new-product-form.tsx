@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import { z } from "zod";
+import { useMutation } from "@tanstack/react-query";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ImagePlus, Trash2 } from "lucide-react";
-import Image from "next/image";
 
 import {
   Form,
@@ -28,6 +29,8 @@ import { Button } from "../ui/button";
 import FormSuccess from "@/components/auth/form-success";
 import FormError from "@/components/auth/form-error";
 import newProductAction from "@/actions/new-product";
+import { createNewProduct } from "@/api/product";
+import axios from "axios";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 // import Select from "react-select";
@@ -47,9 +50,6 @@ export default function NewProductForm() {
 
   const values = useWatch({ control: form.control });
 
-  const [success, setSuccess] = useState<string | undefined>("");
-  const [error, setError] = useState<string | undefined>("");
-
   // console.log("VALUES: ", values);
 
   const [subCategoryOption, setSubCategoryOption] =
@@ -68,15 +68,19 @@ export default function NewProductForm() {
     }
   }
 
-  const onSubmit = (formData: z.infer<typeof ProductSchema>) => {
-    setSuccess("");
-    setError("");
+  // Mutation function
+  const mutation = useMutation({
+    mutationFn: createNewProduct,
+  });
 
-    console.log("Final Values: ", formData);
-    newProductAction(formData).then((data) => {
-      setSuccess(data.success);
-      setError(data.error);
-    });
+  const onSubmit = (formData: z.infer<typeof ProductSchema>) => {
+    // console.log("Final Values: ", formData);
+    // newProductAction(formData).then((data) => {
+    //   setSuccess(data.success);
+    //   setError(data.error);
+    // });
+
+    mutation.mutate(formData);
   };
 
   // Function to add an image
@@ -337,10 +341,17 @@ export default function NewProductForm() {
             </div>
           </div>
 
-          <FormSuccess message={success} />
-          <FormError message={error} />
+          <FormSuccess
+            message={mutation.isSuccess ? mutation.data.message : ""}
+          />
+          <FormError message={mutation.isError ? mutation.error.message : ""} />
 
-          <Button className="bg-main hover:bg-main_hover text-white font-bold text-base w-full p-4">
+          <Button
+            disabled={mutation.isPending}
+            className="bg-main hover:bg-main_hover text-white font-bold text-base w-full p-4"
+            type="submit"
+            onClick={() => mutation.reset()}
+          >
             Publish
           </Button>
         </form>
