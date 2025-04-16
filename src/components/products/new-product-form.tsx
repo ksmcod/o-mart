@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { useForm, useWatch } from "react-hook-form";
@@ -28,12 +29,10 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import FormSuccess from "@/components/auth/form-success";
 import FormError from "@/components/auth/form-error";
-import newProductAction from "@/actions/new-product";
 import { createNewProduct } from "@/api/product";
-import axios from "axios";
+import toast from "react-hot-toast";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
-// import Select from "react-select";
 
 export default function NewProductForm() {
   const form = useForm<z.infer<typeof ProductSchema>>({
@@ -49,6 +48,8 @@ export default function NewProductForm() {
   });
 
   const values = useWatch({ control: form.control });
+
+  const router = useRouter();
 
   // console.log("VALUES: ", values);
 
@@ -71,6 +72,10 @@ export default function NewProductForm() {
   // Mutation function
   const mutation = useMutation({
     mutationFn: createNewProduct,
+    onSuccess: () => {
+      toast.success("Product uploaded successfully");
+      router.push("/");
+    },
   });
 
   const onSubmit = (formData: z.infer<typeof ProductSchema>) => {

@@ -1,3 +1,9 @@
+import Container from "@/components/Container";
+
 export default function AccountPage() {
-  return <div>Account page</div>;
+  return (
+    <div>
+      <Container>Hey there</Container>
+    </div>
+  );
 }
