@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 import { db } from "@/lib/db";
+import { auth } from "@/auth";
 
 export const runtime = "nodejs";
 
@@ -12,12 +13,19 @@ cloudinary.config({
 
 export async function POST(req: NextRequest) {
   try {
+    const session = await auth();
+    const currentUser = session?.user;
+
+    if (!currentUser) {
+      return NextResponse.json({ message: "Unauthoried" }, { status: 401 });
+    }
+
     const formData = await req.formData();
 
-    const name = formData.get("name");
-    const category = formData.get("category");
-    const subCategory = formData.get("sub_category");
-    const description = formData.get("description");
+    const name = String(formData.get("name"));
+    const category = String(formData.get("category"));
+    const subCategory = String(formData.get("sub_category"));
+    const description = String(formData.get("description"));
     const price = Number(formData.get("price"));
     const images = formData.getAll("imageFiles[]");
 
@@ -62,9 +70,26 @@ export async function POST(req: NextRequest) {
 
     const imageUrls = await Promise.all(uploadPromises);
 
-    return NextResponse.json({ message: "All good!" }, { status: 200 });
+    const product = await db.product.create({
+      data: {
+        name: name,
+        category: category,
+        sub_category: subCategory,
+        description: description,
+        price: price,
+        imageUrls: imageUrls,
+        userId: currentUser.id as string,
+      },
+    });
+
+    console.log("Uploaded product: ", product);
+
+    return NextResponse.json(
+      { message: "Product uploaded successfully" },
+      { status: 200 }
+    );
   } catch (error) {
     console.log("ERROR OCCURED::", error);
-    return NextResponse.json({ message: "An error occured!" }, { status: 500 });
+    return NextResponse.json({ message: "An error occured" }, { status: 500 });
   }
 }
